@@ -1,0 +1,31 @@
+//
+https://github.com/jhipster/generator-jhipster/blob/2865e441e4b09335f88f3839ee9147f8b8b9c05e/generators/client/templates/react/src/test/javascript/e2e/modules/account/account.spec.ts.ejs
+
+// blob: 2865e441e4b09335f88f3839ee9147f8b8b9c05e
+
+// project_name: jhipster/generator-jhipster
+
+// flaky_file: /generators/client/templates/react/src/test/javascript/e2e/modules/account/account.spec.ts.ejs
+
+// test_affected:
+https://github.com/jhipster/generator-jhipster/blob/2865e441e4b09335f88f3839ee9147f8b8b9c05e/generators/client/templates/react/src/test/javascript/e2e/modules/account/account.spec.ts.ejs
+// start_line: 165
+// end_line: 182
+it('should activate the new registered user', async () => {
+  expect(await element(by.id('user-management-page-heading')).isPresent()).to.be.true;
+<%_ if (databaseType !== 'cassandra') { _%>
+
+  const modifiedDateSortButton = getModifiedDateSortButton();
+  await waitUntilClickable(modifiedDateSortButton);
+  await modifiedDateSortButton.click();
+<%_ } _%>
+
+  const deactivatedButton = getUserDeactivatedButtonByLogin('user_test');
+  await waitUntilClickable(deactivatedButton);
+  await deactivatedButton.click();
+  await waitUntilHidden(deactivatedButton);
+
+  // Deactivated button should disappear
+  expect(await deactivatedButton.isPresent()).to.be.false;
+  await navBarPage.autoSignOut();
+});

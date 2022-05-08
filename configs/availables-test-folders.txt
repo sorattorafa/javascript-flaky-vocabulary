@@ -1,0 +1,8 @@
+test
+spec
+__tests__
+tests
+integration
+e2e-tests
+integration-tests
+js/tests
