@@ -6,4 +6,5 @@ token.txt
 downloads_flaky
 todo.txt
 .env
+*.csv
 datasets/tests/normal-tests.json
