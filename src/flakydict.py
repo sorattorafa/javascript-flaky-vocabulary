@@ -1,7 +1,23 @@
+import io
 import json
+import orjson
 import pandas as pd
+import numpy as np
+import random
 from dateutil.parser import parse
 from matplotlib.colors import is_color_like
+
+import platform
+import sys
+import gc
+
+def print_memory_status():
+    (gen1_threshold, gen2_threshold, gen3_threshold) = gc.get_threshold()
+    (gen1_count, gen2_count, gen3_count) = gc.get_count()
+    print("Memory statistics (current/threshold):", end=" ")
+    print("1st(", gen1_count, gen1_threshold, ")", end=" ")
+    print("2nd(", gen2_count, gen2_threshold, ")", end=" ")
+    print("3rd(", gen3_count, gen3_threshold, ")")
 
 # DONE (P0): contar repeticao dos tokens em um flaky {value, type, quantity}
 # DONE (P0): Criar a tabela: linhas (testes) e colunas todos os tokens (de todos testes);
@@ -28,53 +44,63 @@ def is_date(string, fuzzy=False):
     except ValueError:
         return False
 
-def flaky_line(df, row, df_type):
-    """
-    receives flaky column and returns a flaky line
-    """
-
-    new_flaky_line = {} # get  flakies with type dataset
-    new_flaky_line['id'] = row['URL']
-    for column in df.columns:
-        if(column != 'id'):
-            new_flaky_line[column] = 0
-    for column in df.columns:
-        if(column != 'id'):
-            for token in row['tokens']:
-                if(df_type == 'value'):
-                    if(column == token['value']):
-                        new_flaky_line[column] = token['quantity'] 
-                elif(df_type == 'value_and_type'):
-                    if(column == token['value'] + '_' + token['type']):
-                        new_flaky_line[column] = token['quantity']
-    new_flaky_line['is_flaky'] = row['is_flaky']
-
-    return new_flaky_line
-
-def init_dataset(file_loc):
-    flaky_dataset = {}
+def init_dataset(file_loc, sampling=False):
+    gc.collect()
     with open(file_loc, encoding='utf8') as json_file:
-        data = json.load(json_file) # Opening JSON file
+        print("Counting tokens from", file_loc, flush = True)
+        # data = json.load(json_file) # Opening JSON file
+        data = orjson.loads(json_file.read())
 
-        for row in data: # agrupando tokens iguais
+        dataset_tokens = set()
+        for row in data: # descobre todos os tokens do conjunto de dados
             for token in row['tokens']:
-                token['quantity'] = row['tokens'].count(token)
-            unique_list = pd.DataFrame(row['tokens']).drop_duplicates().to_dict('records')
-            row['tokens'] = unique_list
-        
-        for row in data:    
-            for token in row['tokens']:
-                flaky_dataset[str(token['value'])] = []
+                dataset_tokens.add(token['value'])
+        dataset_tokens = sorted(dataset_tokens)
+        print("Found", len(dataset_tokens), "tokens", flush = True)
 
-        df = pd.DataFrame(flaky_dataset) # construção de colunas e linhas
-        flakies = [] # get  flakies dataset
-        
+        print("Creating empty dataframe...", flush = True)
+        dataset_df = pd.DataFrame(columns = dataset_tokens, dtype=np.int8).astype(np.int8)
+
+        print("Processing test cases...", flush = True)
+        i = 0
         for row in data:
-            flaky = flaky_line(df, row, 'value')
-            flakies.append(flaky)
-        
-        df = pd.DataFrame(flakies)
-        return df
+            if sampling:
+                if random.randint(1, 10) == 1:
+                    print(".", end="", flush = True)
+                else:
+                    print("|", end="", flush = True)
+                    continue
+            else:
+                print(".", end="", flush = True)
+            instance_tokens = dict()
+            # for dataset_token in dataset_tokens:
+            #    instance_tokens[dataset_token] = 0
+            for instance_token in row['tokens']:
+                if instance_token['value'] not in instance_tokens:
+                    instance_tokens[instance_token['value']] = 0
+                else:
+                    instance_tokens[instance_token['value']] = instance_tokens[instance_token['value']] + 1
+            pd_row = pd.DataFrame.from_dict([instance_tokens]).astype(np.int8)
+            dataset_df = dataset_df.append(pd_row)
+            i += 1
+            if (i % 100 == 0):
+                gc.collect()
+                print(i)
+        print("Done with", i, "instances", flush = True)
+       
+        print("Converting NaN to zero", flush = True)
+        dataset_df.fillna(value=0, inplace=True)
+
+        print("Converting datatype to int8", flush = True)
+        dataset_df = dataset_df.astype(np.int8, copy=False)
+
+        string_file = io.StringIO()
+        dataset_df.info(buf = string_file, verbose=False, memory_usage = "deep", show_counts=True)    
+        print("Memory usage for dataframe\n", string_file.getvalue())
+        # memory_usage = dataset_df.memory_usage(index = True, deep = True)
+        # print("Memory usage per column type\n", memory_usage.to_string())
+        print("Done", flush = True)
+        return dataset_df
 
 def init_dataset_with_token_and_type(file_loc):    
     flaky_dataset_value_and_type = {}
@@ -178,21 +204,25 @@ def clustered_dataset(file_loc):
 
 if __name__ == "__main__":
     # Flaky datasets
-    flaky_tests_json = './datasets/tests/flaky-parsed.json'
-    df = init_dataset(flaky_tests_json)
+#    flaky_tests_json = '/home/magsilva/Projects/jsflaky-dictionary/datasets/tests/flaky-parsed.json'
+#    df = init_dataset(flaky_tests_json)
+#    df.to_csv('/home/magsilva/Projects/jsflaky-dictionary/datasets/dataframes/flakies/1.csv', index=False)
+    
     #df_token_and_type = get_token_w_type_dataset(flaky_tests_json)
-    #clustered_df = clustered_dataset(flaky_tests_json)
-
-    df.to_csv('./datasets/dataframes/flakies/1.csv', index=False)
     #df_token_and_type.to_csv('./datasets/dataframes/flakies/2.csv', index=False)
+
+    #clustered_df = clustered_dataset(flaky_tests_json)
     #clustered_df.to_csv('./datasets/dataframes/flakies/3.csv', index=False)
     
     # Normal datasets
-    normal_tests_json = './datasets/tests/normal-tests.json'
-    normal_df = init_dataset(normal_tests_json)
+    normal_tests_json = '/home/magsilva/jsflaky-dictionary/datasets/tests/normal-tests.json'
+    normal_df = init_dataset(normal_tests_json, True)
+    normal_df.to_csv('/home/magsilva/jsflaky-dictionary/datasets/dataframes/normal/1.csv', index=False)
+   
     #normal_df_token_and_type = init_dataset_with_token_and_type(normal_tests_json)
-    #normal_clustered_df = clustered_dataset(normal_tests_json)
-
-    normal_df.to_csv('./datasets/dataframes/normal/1.csv', index=False)
     #normal_df_token_and_type.to_csv('./datasets/dataframes/normal/2.csv', index=False)
+    
+    #normal_clustered_df = clustered_dataset(normal_tests_json)
+   
+    
     #normal_clustered_df.to_csv('./datasets/dataframes/normal/3.csv', index=False)
