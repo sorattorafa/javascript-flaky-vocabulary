@@ -8,3 +8,5 @@ todo.txt
 .env
 *.csv
 datasets/tests/normal-tests.json
+*.sav
+classifiers/

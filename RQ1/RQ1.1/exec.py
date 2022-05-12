@@ -31,6 +31,9 @@ def initDataset(flakyFileName, normalFileName):
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
  
+    df_flaky['is_flaky'] = 1
+    df_normal['is_flaky'] = 0
+    
     frames = [df_flaky, df_normal]
     
     result = pd.concat(frames)
@@ -247,8 +250,8 @@ if __name__ == "__main__":
     # verificar para todos projetos
     start_time = 0
     dirName = './datasets/dataframes/'
-    flakyFileName = dirName + 'flakies/1.csv'
-    normalFileName = dirName + 'normal/1.csv'
+    flakyFileName = dirName + 'flaky-1.csv'
+    normalFileName = dirName + 'normal-1.csv'
 
     X_train, x_test, y_train, y_test = initDataset(flakyFileName, normalFileName)
     print("Data - OK")
