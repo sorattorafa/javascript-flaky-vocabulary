@@ -31,8 +31,8 @@ def initDataset(flakyFileName, normalFileName):
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
  
-    df_flaky['is_flaky'] = 1
-    df_normal['is_flaky'] = 0
+    df_flaky['is_flaky'] = True
+    df_normal['is_flaky'] = False
     
     frames = [df_flaky, df_normal]
     
