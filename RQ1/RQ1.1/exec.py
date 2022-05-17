@@ -236,7 +236,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
     if (plot):
         plot_comparison(comparison_values)
-
+    results.to_csv('results/results.csv',index=False)
     return results
 
 
@@ -257,4 +257,4 @@ if __name__ == "__main__":
     classifiers = initClassifiers()
     print("Classifiers - OK")
 
-    execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=['knn'])
+    results = execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=['knn'])
