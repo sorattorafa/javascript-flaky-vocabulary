@@ -23,32 +23,33 @@ import time
 import re
 from sklearn.model_selection import learning_curve
 import numpy as np
-
+#from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
 def initDataset(flakyFileName, normalFileName):
     
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
- 
+    
+
     df_flaky['is_flaky'] = True
     df_normal['is_flaky'] = False
     
     frames = [df_flaky, df_normal]
     
     result = pd.concat(frames)
+
     result = result.fillna(0)
     
     y = result['is_flaky']
 
     result.drop('is_flaky', axis=1, inplace=True)
     result.drop('id', axis=1, inplace=True)
-    
+
     x = result
     
-    #print(x.shape, y.shape)
-    
     X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
+   
     return [X_train, x_test, y_train, y_test]
 
 def initClassifiers():
@@ -61,6 +62,7 @@ def initClassifiers():
         'logisticRegression': LogisticRegression(max_iter=1000),
         'perceptron': CalibratedClassifierCV(Perceptron()),
         'lda': LinearDiscriminantAnalysis(),
+        #'xgb': XGBClassifier(),
     }
 
     return classifiers
@@ -193,15 +195,11 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
         predict = classifier.predict(x_test_exec)
 
-        # choice 1
         #print(classifier.predict_proba(x_test_exec)[:1])
-        #print(classifier.predict_proba(x_test_exec)[:,1])
-        
+
         y_probs = classifier.predict_proba(x_test_exec)[:,1]
-
+        
         saveIncorrectClassifications(x_test_exec, predict, y_test, key)
-
-        print(y_test.shape, y_probs.shape)
 
         result = {
             'classifier': key,
@@ -225,14 +223,14 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
             }
 
             disp = plot_confusion_matrix(classifier, x_test_exec, y_test,
-                                 display_labels=['flaky', 'nonflaky'],
+                                 display_labels=['nonflaky', 'flaky'],
                                  cmap=plt.cm.Blues)
             disp.ax_.set_title(key)
             
             plt.savefig('plot/CM/cm_' + key + '.png')
 
         
-        pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
+        #pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
                         
         print(key, classification_report(y_test, predict, output_dict=True), matthews_corrcoef(y_test, predict), roc_auc_score(y_test, y_probs), "\n \n")   
 
