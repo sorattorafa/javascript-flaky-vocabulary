@@ -34,18 +34,18 @@ exports.get_test_tokens = () =>
         return repos_array;
       })
       .then(async repos => {
-    /*
+        /*
         await Promise.all(repos.map(repo => {
-          return clone_repo(repo, "main")s
+          return clone_repo(repo, "main");
         }));
-    */
+        */
         return repos_array;
       })
       .then(repos_array => get_tests_filenames(repos_array))
       .then(get_tests_files_contents)
       .then(get_tokens_by_normal_test)
       .then(save_response)
-     // .then(console.log)
+      // .then(console.log)
       .then(resolve)
       .catch((err) => {
         console.log(err);

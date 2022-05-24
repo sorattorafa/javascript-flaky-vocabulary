@@ -119,24 +119,28 @@ exports.getTokensByNormalTest = (test) => {
       ) {
         checked_tests += 1;
         var j = i;
+        const start_line = accept_tokens[j+1].loc.start.line;
         var tokens_buffer = [];
+        const final_of_tests = [...accept_tests_keywords, 'describe']
         while (
           accept_tokens[j + 1] &&
-          !accept_tests_keywords.includes(accept_tokens[j + 1].value)
+          !final_of_tests.includes(accept_tokens[j + 1].value)
         ) {
           j = j + 1;
           tokens_buffer.push({
             value: accept_tokens[j].value,
             type: accept_tokens[j].type,
           });
-        }
-
+        } 
+        const end_line = accept_tokens[j].loc.start.line +1;
         const new_object = {
           tokens: tokens_buffer,
           project_name: test.project_name,
           project_author: test.project_author,
           file: test.name,
           commit: test.commit,
+          start_line: start_line,
+          end_line: end_line,
         };
   
         tokens_by_test.push(new_object);

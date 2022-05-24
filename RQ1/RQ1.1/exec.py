@@ -44,12 +44,14 @@ def initDataset(flakyFileName, normalFileName):
     y = result['is_flaky']
 
     result.drop('is_flaky', axis=1, inplace=True)
-    result.drop('id', axis=1, inplace=True)
 
     x = result
     
     X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
-   
+    
+    # para o id não atrapalhar o modelo de classificação
+    # X_train.drop('id', axis=1, inplace=True)
+    
     return [X_train, x_test, y_train, y_test]
 
 def initClassifiers():
@@ -164,7 +166,19 @@ def saveIncorrectClassifications(X_test, predicted, label, classifier):
     df["labeltestclass"] = label.reset_index()["labeltestclass"]
     df["predictedclass"] = predicted.reset_index()["predictedclass"]
         
-    df[df.predictedclass != df.labeltestclass].to_csv("IC/" + classifier + "_IC.txt")
+    errors = df[df.predictedclass != df.labeltestclass]
+    
+    id_errors = []
+
+    for index, row in errors.iterrows():
+       if ('id' in row.keys()):
+            id_errors.append({'id': row['id']})
+            
+    incorrect_data = pd.DataFrame(id_errors, columns=['id'])
+    incorrect_names = "IC/ids/" + classifier + "_IC.csv"
+    incorrect_data.to_csv(incorrect_names)
+    
+    errors.to_csv("IC/" + classifier + "_IC.txt")
 
 def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[], plot=True):
 
@@ -173,16 +187,24 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
     comparison_values = {}
 
+    data_X_train = X_train.copy()
+    data_x_test = x_test.copy()
+
+    data_X_train =  data_X_train.loc[:, data_X_train.columns != 'id']
+    data_x_test =  data_x_test.loc[:, data_x_test.columns != 'id']
+    
+    
     # create a normalized version
-    trainScaler = Binarizer(threshold=0.0).fit(X_train)
-    testScaler = Binarizer(threshold=0.0).fit(x_test)
-    X_train_norm = trainScaler.transform(X_train)
-    x_test_norm = testScaler.transform(x_test)
+    trainScaler = Binarizer(threshold=0.0).fit(data_X_train)
+    X_train_norm = trainScaler.transform(data_X_train)
+
+    testScaler = Binarizer(threshold=0.0).fit(data_x_test)
+    x_test_norm = testScaler.transform(data_x_test)
 
     for key, classifier in classifiers.items():
 
-        x_train_exec = X_train
-        x_test_exec = x_test
+        x_train_exec = data_X_train
+        x_test_exec = data_x_test
         y_train_exec = y_train
         y_test_exec = y_test
 
@@ -199,7 +221,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
         y_probs = classifier.predict_proba(x_test_exec)[:,1]
         
-        saveIncorrectClassifications(x_test_exec, predict, y_test, key)
+        saveIncorrectClassifications(x_test, predict, y_test, key)
 
         result = {
             'classifier': key,
@@ -247,9 +269,9 @@ def get_time(start_time):
 if __name__ == "__main__":
     # verificar para todos projetos
     start_time = 0
-    dirName = './datasets/dataframes/'
-    flakyFileName = dirName + 'flaky-1.csv'
-    normalFileName = dirName + 'normal-1.csv'
+    dirName = './datasets/dataframes'
+    flakyFileName = dirName + '/flakies/1.csv'
+    normalFileName = dirName + '/normal/1.csv'
 
     X_train, x_test, y_train, y_test = initDataset(flakyFileName, normalFileName)
     print("Data - OK")

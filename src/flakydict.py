@@ -52,6 +52,7 @@ def init_dataset(file_loc, sampling=False):
         data = orjson.loads(json_file.read())
 
         dataset_tokens = set()
+        dataset_tokens.add('id')
         for row in data: # descobre todos os tokens do conjunto de dados
             for token in row['tokens']:
                 dataset_tokens.add(token['value'])
@@ -59,7 +60,7 @@ def init_dataset(file_loc, sampling=False):
         print("Found", len(dataset_tokens), "tokens", flush = True)
 
         print("Creating empty dataframe...", flush = True)
-        dataset_df = pd.DataFrame(columns = dataset_tokens, dtype=np.int8).astype(np.int8)
+        dataset_df = pd.DataFrame(columns = dataset_tokens, dtype=np.int16).astype(np.int16)
 
         print("Processing test cases...", flush = True)
         i = 0
@@ -80,7 +81,8 @@ def init_dataset(file_loc, sampling=False):
                     instance_tokens[instance_token['value']] = 0
                 else:
                     instance_tokens[instance_token['value']] = instance_tokens[instance_token['value']] + 1
-            pd_row = pd.DataFrame.from_dict([instance_tokens]).astype(np.int8)
+            pd_row = pd.DataFrame.from_dict([instance_tokens]).astype(np.int16)
+            pd_row['id'] = row['URL'] + '_' + str(row['start_line'])
             dataset_df = dataset_df.append(pd_row)
             i += 1
             if (i % 100 == 0):
@@ -91,8 +93,12 @@ def init_dataset(file_loc, sampling=False):
         print("Converting NaN to zero", flush = True)
         dataset_df.fillna(value=0, inplace=True)
 
-        print("Converting datatype to int8", flush = True)
-        dataset_df = dataset_df.astype(np.int8, copy=False)
+        print("Converting datatype to int16", flush = True)
+        
+        original_df = dataset_df.copy()
+        original_df =  original_df.loc[:, original_df.columns != 'id'].astype(np.int16, copy=False)
+        original_df['id'] = dataset_df.loc[:, dataset_df.columns == 'id']
+        dataset_df = original_df
 
         string_file = io.StringIO()
         dataset_df.info(buf = string_file, verbose=False, memory_usage = "deep", show_counts=True)    
@@ -204,25 +210,24 @@ def clustered_dataset(file_loc):
 
 if __name__ == "__main__":
     # Flaky datasets
-#    flaky_tests_json = '/home/magsilva/Projects/jsflaky-dictionary/datasets/tests/flaky-parsed.json'
-#    df = init_dataset(flaky_tests_json)
-#    df.to_csv('/home/magsilva/Projects/jsflaky-dictionary/datasets/dataframes/flakies/1.csv', index=False)
-    
-    #df_token_and_type = get_token_w_type_dataset(flaky_tests_json)
-    #df_token_and_type.to_csv('./datasets/dataframes/flakies/2.csv', index=False)
-
-    #clustered_df = clustered_dataset(flaky_tests_json)
-    #clustered_df.to_csv('./datasets/dataframes/flakies/3.csv', index=False)
+    flaky_tests_json = './datasets/tests/flaky-parsed.json'
+    df = init_dataset(flaky_tests_json)
+    df.to_csv('./datasets/dataframes/flakies/1.csv', index=False)
     
     # Normal datasets
-    normal_tests_json = '/home/magsilva/jsflaky-dictionary/datasets/tests/normal-tests.json'
+    normal_tests_json = './datasets/tests/normal-tests.json'
     normal_df = init_dataset(normal_tests_json, True)
-    normal_df.to_csv('/home/magsilva/jsflaky-dictionary/datasets/dataframes/normal/1.csv', index=False)
+    normal_df.to_csv('./datasets/dataframes/normal/1.csv', index=False)
    
+
+   
+    #TODO: atualizar initdataset para considerar esses elementos
+
+    #df_token_and_type = get_token_w_type_dataset(flaky_tests_json)
+    #df_token_and_type.to_csv('./datasets/dataframes/flakies/2.csv', index=False)
+    #clustered_df = clustered_dataset(flaky_tests_json)
+    #clustered_df.to_csv('./datasets/dataframes/flakies/3.csv', index=False)
     #normal_df_token_and_type = init_dataset_with_token_and_type(normal_tests_json)
     #normal_df_token_and_type.to_csv('./datasets/dataframes/normal/2.csv', index=False)
-    
     #normal_clustered_df = clustered_dataset(normal_tests_json)
-   
-    
     #normal_clustered_df.to_csv('./datasets/dataframes/normal/3.csv', index=False)

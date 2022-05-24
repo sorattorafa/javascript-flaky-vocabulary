@@ -69,6 +69,8 @@ exports.save_response = save_response = async (response) => {
           commit: test_item.commit,
           is_flaky: false,
           tokens: test_item.tokens,
+          start_line: test_item.start_line,
+          end_line: test_item.end_line,
         };
         test_rows.push(new_row);
       }
