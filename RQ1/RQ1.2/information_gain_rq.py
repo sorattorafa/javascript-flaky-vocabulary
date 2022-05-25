@@ -57,4 +57,4 @@ if __name__ == '__main__':
         print(i, r, informationGain[r])
         
     infGainCSV = pd.DataFrame(sortedInformationGainPosition, columns=['position', 'token', 'information_gain', 'total_ocurences', 'total_flaky_occurences', 'total_nonflaky_occurences'])
-    infGainCSV.to_csv('./results/information_gain_rq_13.csv')
+    infGainCSV.to_csv('./results/information_gain_rq_12.csv')
