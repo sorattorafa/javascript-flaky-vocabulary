@@ -23,29 +23,35 @@ import time
 import re
 from sklearn.model_selection import learning_curve
 import numpy as np
-
+#from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
 def initDataset(flakyFileName, normalFileName):
     
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
- 
+    
+
+    df_flaky['is_flaky'] = True
+    df_normal['is_flaky'] = False
+    
     frames = [df_flaky, df_normal]
     
     result = pd.concat(frames)
+
     result = result.fillna(0)
     
     y = result['is_flaky']
 
     result.drop('is_flaky', axis=1, inplace=True)
-    result.drop('id', axis=1, inplace=True)
-    
+
     x = result
     
-    #print(x.shape, y.shape)
-    
     X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
+    
+    # para o id não atrapalhar o modelo de classificação
+    # X_train.drop('id', axis=1, inplace=True)
+    
     return [X_train, x_test, y_train, y_test]
 
 def initClassifiers():
@@ -58,6 +64,7 @@ def initClassifiers():
         'logisticRegression': LogisticRegression(max_iter=1000),
         'perceptron': CalibratedClassifierCV(Perceptron()),
         'lda': LinearDiscriminantAnalysis(),
+        #'xgb': XGBClassifier(),
     }
 
     return classifiers
@@ -159,7 +166,19 @@ def saveIncorrectClassifications(X_test, predicted, label, classifier):
     df["labeltestclass"] = label.reset_index()["labeltestclass"]
     df["predictedclass"] = predicted.reset_index()["predictedclass"]
         
-    df[df.predictedclass != df.labeltestclass].to_csv("IC/" + classifier + "_IC.txt")
+    errors = df[df.predictedclass != df.labeltestclass]
+    
+    id_errors = []
+
+    for index, row in errors.iterrows():
+       if ('id' in row.keys()):
+            id_errors.append({'id': row['id']})
+            
+    incorrect_data = pd.DataFrame(id_errors, columns=['id'])
+    incorrect_names = "IC/ids/" + classifier + "_IC.csv"
+    incorrect_data.to_csv(incorrect_names)
+    
+    errors.to_csv("IC/" + classifier + "_IC.txt")
 
 def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[], plot=True):
 
@@ -168,16 +187,24 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
     comparison_values = {}
 
+    data_X_train = X_train.copy()
+    data_x_test = x_test.copy()
+
+    data_X_train =  data_X_train.loc[:, data_X_train.columns != 'id']
+    data_x_test =  data_x_test.loc[:, data_x_test.columns != 'id']
+    
+    
     # create a normalized version
-    trainScaler = Binarizer(threshold=0.0).fit(X_train)
-    testScaler = Binarizer(threshold=0.0).fit(x_test)
-    X_train_norm = trainScaler.transform(X_train)
-    x_test_norm = testScaler.transform(x_test)
+    trainScaler = Binarizer(threshold=0.0).fit(data_X_train)
+    X_train_norm = trainScaler.transform(data_X_train)
+
+    testScaler = Binarizer(threshold=0.0).fit(data_x_test)
+    x_test_norm = testScaler.transform(data_x_test)
 
     for key, classifier in classifiers.items():
 
-        x_train_exec = X_train
-        x_test_exec = x_test
+        x_train_exec = data_X_train
+        x_test_exec = data_x_test
         y_train_exec = y_train
         y_test_exec = y_test
 
@@ -190,15 +217,11 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
         predict = classifier.predict(x_test_exec)
 
-        # choice 1
         #print(classifier.predict_proba(x_test_exec)[:1])
-        #print(classifier.predict_proba(x_test_exec)[:,1])
-        
+
         y_probs = classifier.predict_proba(x_test_exec)[:,1]
-
-        saveIncorrectClassifications(x_test_exec, predict, y_test, key)
-
-        print(y_test.shape, y_probs.shape)
+        
+        saveIncorrectClassifications(x_test, predict, y_test, key)
 
         result = {
             'classifier': key,
@@ -222,20 +245,20 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
             }
 
             disp = plot_confusion_matrix(classifier, x_test_exec, y_test,
-                                 display_labels=['flaky', 'nonflaky'],
+                                 display_labels=['nonflaky', 'flaky'],
                                  cmap=plt.cm.Blues)
             disp.ax_.set_title(key)
             
             plt.savefig('plot/CM/cm_' + key + '.png')
 
         
-        pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
+        #pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
                         
         print(key, classification_report(y_test, predict, output_dict=True), matthews_corrcoef(y_test, predict), roc_auc_score(y_test, y_probs), "\n \n")   
 
     if (plot):
         plot_comparison(comparison_values)
-
+    results.to_csv('results/results.csv',index=False)
     return results
 
 
@@ -246,9 +269,9 @@ def get_time(start_time):
 if __name__ == "__main__":
     # verificar para todos projetos
     start_time = 0
-    dirName = './datasets/dataframes/'
-    flakyFileName = dirName + 'flakies/1.csv'
-    normalFileName = dirName + 'normal/1.csv'
+    dirName = './datasets/dataframes'
+    flakyFileName = dirName + '/flakies/1.csv'
+    normalFileName = dirName + '/normal/1.csv'
 
     X_train, x_test, y_train, y_test = initDataset(flakyFileName, normalFileName)
     print("Data - OK")
@@ -256,4 +279,4 @@ if __name__ == "__main__":
     classifiers = initClassifiers()
     print("Classifiers - OK")
 
-    execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=['knn'])
+    results = execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=['knn'])
