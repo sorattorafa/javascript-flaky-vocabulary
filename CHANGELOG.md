@@ -16,17 +16,11 @@
 
 renomear a pasta para RQ2
 
-# TODO TEXTO:
 
+# TODO TEXTO:
 
 - [ ] Colocar todo o texto no WORD para corrigir erros ortográficos
 - [ ] Título:
-
-## Trabalhos relacionados
-
-- [ ] Explicar as perspectivas de ordenação da tabela de ganho de informação.
-- [ ] explicar a parte ruim também quanto ao test smells
-- [ ] Apresentar os resultados do gustavo e do camara separadamente
 
 ## Abordagem
 
@@ -40,8 +34,13 @@ renomear a pasta para RQ2
 - [ ] % colocar o link pro github aqui
 - [ ] RQ2 -> colocar as duas tabelas, por ganho de informação e por ocorrências em flakies, ressaltando que não é porque se repete varias vezes que possui um bom ganho de informação.
 
+## Resultados
+
+- [ ] Explicar as perspectivas de ordenação da tabela de ganho de informação.
+- [ ] Falar que o Naive bayes apresenta resultados tbm no trabalho de camara2021use
 
 
+- [x] Apresentar os resultados do gustavo e do camara separadamente
 - [x] Descrever melhor o processo no fim da introdução
 - [x] na seção {Conjuntos de dados para estudos empíricos sobre testes instáveis} mostrar o pq escolhemos o dataset do romano
 - [x] RQ2 verificar exatamente como está nos trabalhos originais (referente ao ganho de informação)
@@ -57,3 +56,4 @@ renomear a pasta para RQ2
 - [x] Colocar corretamente todas crossref's
 - [x] Remover fórmulas de precisão 
 - [x] Ajustar a introdução do segundo capitulo(trabalhos relacionados)
+- [x] explicar a parte ruim também quanto ao test smells
