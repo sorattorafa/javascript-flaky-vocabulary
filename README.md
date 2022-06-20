@@ -1,11 +1,25 @@
-<h1 align="center">Test Code Tokenizer</h1>
-<p href="#descricao" align="center">Get test tokens by Github repository url.</p>
+<h1 align="center">Vocabulary of flaky tests in Javascript</h1>
+<p href="#descricao" align="center">Get test tokens by Github repository url and training ML models to predict flakiness with Javascript test code.</p>
 
 <div align="center">
   <img alt="Java" src="https://img.shields.io/badge/javascript-%23ED8B00.svg?style=for-the-badge&logo=javascript&logoColor=white"/>
 </div>
 
-# Table of contents
+
+# Vocabulary of flaky tests in Javascript
+
+This repository contains supplementary material of the Thesis "Vocabulary of flaky tests in Javascript" as a parcial requisite to fullfill computer scientist course of Universidade Tecnológica Federal do Paraná, Campo Mourão. 
+
+**Abstract**: *Context: Regression testing is a software verification and validation activity in modern software engineering. In this activity, tests can fail without any implementation change, characterizing a flaky test. Flaky tests may delay the release of the software, in addition to jeopardizing its quality assurance. One way to identify flaky tests is by re-running the tests, but this has a high computational cost. An alternative to re-execution is the static analysis of the code of the test cases, identifying patterns related to flaky tests. Considering this approach, however, to the best of your knowledge, only works that address Java applications are observed, although other languages, such as Javascript, are also widely used in software development.
+Objective: The objective of this work was to identify flaky tests in Javascript applications without executing them, saving computing resources.
+Method: A dataset was built with flaky test cases extracted from open projects hosted on Github that are implemented in Javascript. Next, a classification model was created, considering the source code of flaky tests in the Javascript language, built from the classification model established in this work.
+Results: We observed that the learning algorithms considered in this study achieved a good performance in the classification of tests regarding flakiness. In particular, logistic regression had the best accuracy (0.984) and was the best in terms of recall (0.98). The vocabulary for flaky tests contains words related to asynchronous wait (e.g., 'then', 'await', 'return') and visualization and user interaction (e.g., 'layout' and 'click'). We also found two words associated with flaky test cases related to the usage of the Cypress framework:  'cy' and 'getByTestID'. The term with the most significant relevance to the information gain is 'then', which is mainly associated with asynchronous waits.
+Conclusions: This work presents relevant results for identifying flaky tests in projects that use Javascript. Further studies are required to consolidate the reliable classification of tests regarding flakiness methodology.*
+
+
+
+
+## Get data from Github section
 
 <!--ts-->
 
