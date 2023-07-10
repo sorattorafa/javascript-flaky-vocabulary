@@ -28,17 +28,17 @@ exports.get_test_tokens = () =>
     Promise.resolve(repos_array)
       .then(() => {
         repos_array = fs
-          .readFileSync("./configs/repositories.txt")
+          .readFileSync("./configs/non-flaky-repos.txt")
           .toString()
           .split("\r\n");
         return repos_array;
       })
       .then(async repos => {
-        /*
+        
         await Promise.all(repos.map(repo => {
           return clone_repo(repo, "main");
         }));
-        */
+      
         return repos_array;
       })
       .then(repos_array => get_tests_filenames(repos_array))

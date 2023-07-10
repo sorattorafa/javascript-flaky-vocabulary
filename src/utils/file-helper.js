@@ -12,8 +12,13 @@ exports.get_tests_filenames = get_tests_filenames = async (repos_array) => {
     tests_names = [
       ...(await glob(`**/downloads_flaky/${repo}/**/**.spec.js`)),
       ...(await glob(`**/downloads_flaky/${repo}/**/**.spec.ts`)),
-      ...(await glob(`**/downloads_flaky/${repo}/**/**.test.js`)),
+   //   ...(await glob(`**/downloads_flaky/${repo}/**/**.test.js`)),
       ...(await glob(`**/downloads_flaky/${repo}/**/**.test.ts`)),
+
+    //...(await glob(`**/downloads_flaky/${repo}/test/e2e/**/**.ts`)),
+    // ...(await glob(`**/downloads_flaky/${repo}/packages/**/__tests__/**/**.ts`)),
+    // ...(await glob(`**/downloads_flaky/${repo}/packages/**/__tests__/**/**.js`)),
+
     ]
 
 
