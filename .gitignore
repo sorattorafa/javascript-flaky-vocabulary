@@ -11,4 +11,3 @@ datasets/tests/normal
 *.sav
 classifiers/
 IC
-results
