@@ -10,11 +10,11 @@ from sklearn.linear_model import Perceptron
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import f1_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import classification_report
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import matthews_corrcoef
-from sklearn.metrics import plot_confusion_matrix
+#from sklearn.metrics import plot_confusion_matrix
 from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.preprocessing import Binarizer
@@ -223,18 +223,19 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
         
         saveIncorrectClassifications(x_test, predict, y_test, key)
 
+        cm = confusion_matrix(y_test, predict)
         result = {
             'classifier': key,
             'f1Score': f1_score(y_test, predict, average='weighted'), #labels=labels,
             'accuracy': classifier.score(x_test_exec, y_test),
-            'confucionMatrix': confusion_matrix(y_test, predict),
+            'confucionMatrix': cm,
             'execution': round_float(get_time(start_time)),
             'classificationReport': classification_report(y_test, predict, output_dict=True), #, target_names=labels
             'AUC': roc_auc_score(y_test, y_probs),
             'MCC': matthews_corrcoef(y_test, predict), 
         }
 
-        results = results.append(result,  ignore_index=True)
+        results = results._append(result,  ignore_index=True)
 
         if (plot):
             plot_learning_curve(classifier, key, key, x_train_exec, y_train, ylim=(0.7, 1.01), n_jobs=4) #cv=cv, 
@@ -244,10 +245,9 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
                 'y_probs': y_probs
             }
 
-            disp = plot_confusion_matrix(classifier, x_test_exec, y_test,
-                                 display_labels=['nonflaky', 'flaky'],
-                                 cmap=plt.cm.Blues)
-            disp.ax_.set_title(key)
+            disp = ConfusionMatrixDisplay(cm, display_labels=['nonflaky', 'flaky'])
+            disp.plot()
+            #disp.ax_.set_title(key)
             
             plt.savefig('plot/CM/cm_' + key + '.png')
 

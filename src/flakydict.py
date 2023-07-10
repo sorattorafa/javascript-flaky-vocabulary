@@ -83,7 +83,7 @@ def init_dataset(file_loc, sampling=False):
                     instance_tokens[instance_token['value']] = instance_tokens[instance_token['value']] + 1
             pd_row = pd.DataFrame.from_dict([instance_tokens]).astype(np.int16)
             pd_row['id'] = row['URL'] + '_' + str(row['start_line'])
-            dataset_df = dataset_df.append(pd_row)
+            dataset_df = dataset_df._append(pd_row)
             i += 1
             if (i % 100 == 0):
                 gc.collect()
@@ -216,7 +216,7 @@ if __name__ == "__main__":
     
     # Normal datasets
     normal_tests_json = './datasets/tests/normal-tests.json'
-    normal_df = init_dataset(normal_tests_json, True)
+    normal_df = init_dataset(normal_tests_json)#, True)
     normal_df.to_csv('./datasets/dataframes/normal/1.csv', index=False)
    
 
