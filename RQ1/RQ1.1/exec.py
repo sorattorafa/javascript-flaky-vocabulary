@@ -26,36 +26,68 @@ import numpy as np
 #from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
-def initDataset(flakyFileName, normalFileName):
+def initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName):
+    # read 4 csv's
+    df_tcc_flaky = pd.read_csv(flakyFileName)
+    df_tcc_unknown = pd.read_csv(unknownFileName)
     
-    df_flaky = pd.read_csv(flakyFileName)
-    df_normal = pd.read_csv(normalFileName)
-    
+    df_new_normal = pd.read_csv(nonFlakyFileName)
+    df_new_flakies = pd.read_csv(newFlakyFileName)    
 
-    df_flaky['is_flaky'] = True
-    df_normal['is_flaky'] = False
+    # add is_flaky column label
+    df_tcc_flaky['is_flaky'] = True
+    df_tcc_unknown['is_flaky'] = False
     
+    df_new_normal['is_flaky'] = False
+    df_new_flakies['is_flaky'] = True
+    
+    # get x and y to training model
+    x, y = get_x_and_y_from_dfs(df_tcc_flaky, df_tcc_unknown)
+
+    # get x and y to test model 
+    new_x_test, new_y_test = get_x_and_y_from_dfs(df_new_flakies, df_new_normal)
+        
+    # add missing columns to original df and new df
+    x = add_missing_columns(x, new_x_test)
+    new_x_test = add_missing_columns(new_x_test, x)
+
+    # set df columns the same order
+    x, new_x_test = order_df_columns(x, new_x_test)
+    
+    # remove not a numbers
+    x = x.fillna(0)
+    new_x_test = new_x_test.fillna(0)
+
+    # get training instances
+    X_train, _, y_train, _ = train_test_split(x, y, test_size=0.20, random_state=1)
+
+    # return training and test instances
+    return [X_train, new_x_test, y_train, new_y_test]
+
+def get_x_and_y_from_dfs(df_flaky, df_normal):
     frames = [df_flaky, df_normal]
-    
     result = pd.concat(frames)
-
-    result = result.fillna(0)
-    
     y = result['is_flaky']
-
     result.drop('is_flaky', axis=1, inplace=True)
-
     x = result
+    return [x, y]
+
+def order_df_columns(x, y):
+    desired_order = x.columns
+    y = y.reindex(columns=desired_order)
+    x = x.reindex(columns=desired_order)
     
-    X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
+    return [x, y]
     
-    # para o id não atrapalhar o modelo de classificação
-    # X_train.drop('id', axis=1, inplace=True)
-    
-    return [X_train, x_test, y_train, y_test]
+def add_missing_columns(df, df_w_columns):
+    missing_columns = [column_name for column_name in df_w_columns.columns if column_name not in df.columns]
+    missing_columns_df = pd.DataFrame(0, index=df.index, columns=missing_columns)
+    df = pd.concat([df, missing_columns_df], axis=1)
+    return df
 
 def initClassifiers():
     classifiers = {
+        'lda': LinearDiscriminantAnalysis(),
         'randomForest': RandomForestClassifier(random_state=1), 
         'decisionTree': DecisionTreeClassifier(min_samples_leaf=1),
         'naiveBayes': GaussianNB(),
@@ -63,12 +95,10 @@ def initClassifiers():
         'knn': KNeighborsClassifier(n_neighbors=1, metric='euclidean'),
         'logisticRegression': LogisticRegression(max_iter=1000),
         'perceptron': CalibratedClassifierCV(Perceptron()),
-        'lda': LinearDiscriminantAnalysis(),
         #'xgb': XGBClassifier(),
     }
 
     return classifiers
-
 
 def round_float(value):
     return float("{:.3f}".format(value))
@@ -213,6 +243,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
             x_test_exec = x_test_norm
 
         classifier.fit(x_train_exec, y_train)
+        
         classifier.score(x_test_exec, y_test)
 
         predict = classifier.predict(x_test_exec)
@@ -224,6 +255,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
         saveIncorrectClassifications(x_test, predict, y_test, key)
 
         cm = confusion_matrix(y_test, predict)
+        
         result = {
             'classifier': key,
             'f1Score': f1_score(y_test, predict, average='weighted'), #labels=labels,
@@ -270,10 +302,14 @@ if __name__ == "__main__":
     # verificar para todos projetos
     start_time = 0
     dirName = './datasets/dataframes'
+    
     flakyFileName = dirName + '/flakies/1.csv'
-    normalFileName = dirName + '/normal/1.csv'
+    unknownFileName = dirName + '/normal/1.csv'
+    
+    nonFlakyFileName = dirName + '/normal/2.csv'
+    newFlakyFileName = dirName + '/flakies/2.csv'
 
-    X_train, x_test, y_train, y_test = initDataset(flakyFileName, normalFileName)
+    X_train, x_test, y_train, y_test = initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName)
     print("Data - OK")
 
     classifiers = initClassifiers()

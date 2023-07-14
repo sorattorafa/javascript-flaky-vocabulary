@@ -2093,5 +2093,734 @@
     ],
     "start_line": 940,
     "end_line": 954
+  },
+  {
+    "URL": "https://github.com/moleculerjs/moleculer/blob/275eda52b1f1dd8f539e89ba840e29be606a5310/test/unit/serializers/cbor.spec.js",
+    "project_name": "moleculer",
+    "project_author": "moleculerjs",
+    "commit": "275eda52b1f1dd8f539e89ba840e29be606a5310",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "\"should serialize the event packet\"",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "new",
+        "type": "Keyword"
+      },
+      {
+        "value": "Date",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "ver",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"4\"",
+        "type": "String"
+      },
+      {
+        "value": "sender",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"node-100\"",
+        "type": "String"
+      },
+      {
+        "value": "id",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"8b3c7371-7f0a-4aa2-b734-70ede29e1bbb\"",
+        "type": "String"
+      },
+      {
+        "value": "event",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"user.created\"",
+        "type": "String"
+      },
+      {
+        "value": "data",
+        "type": "Identifier"
+      },
+      {
+        "value": "a",
+        "type": "Identifier"
+      },
+      {
+        "value": "5",
+        "type": "Numeric"
+      },
+      {
+        "value": "b",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"Test\"",
+        "type": "String"
+      },
+      {
+        "value": "c",
+        "type": "Identifier"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "broadcast",
+        "type": "Identifier"
+      },
+      {
+        "value": "true",
+        "type": "Boolean"
+      },
+      {
+        "value": "meta",
+        "type": "Identifier"
+      },
+      {
+        "value": "level",
+        "type": "Identifier"
+      },
+      {
+        "value": "1",
+        "type": "Numeric"
+      },
+      {
+        "value": "needAck",
+        "type": "Identifier"
+      },
+      {
+        "value": "false",
+        "type": "Boolean"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "serialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "cloneDeep",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "length",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "150",
+        "type": "Numeric"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "deserialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "not",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "toEqual",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      }
+    ],
+    "start_line": 18,
+    "end_line": 41
+  },
+  {
+    "URL": "https://github.com/moleculerjs/moleculer/blob/275eda52b1f1dd8f539e89ba840e29be606a5310/test/unit/serializers/msgpack.spec.js",
+    "project_name": "moleculer",
+    "project_author": "moleculerjs",
+    "commit": "275eda52b1f1dd8f539e89ba840e29be606a5310",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "\"should serialize the event packet\"",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "new",
+        "type": "Keyword"
+      },
+      {
+        "value": "Date",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "ver",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"4\"",
+        "type": "String"
+      },
+      {
+        "value": "sender",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"node-100\"",
+        "type": "String"
+      },
+      {
+        "value": "id",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"8b3c7371-7f0a-4aa2-b734-70ede29e1bbb\"",
+        "type": "String"
+      },
+      {
+        "value": "event",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"user.created\"",
+        "type": "String"
+      },
+      {
+        "value": "data",
+        "type": "Identifier"
+      },
+      {
+        "value": "a",
+        "type": "Identifier"
+      },
+      {
+        "value": "5",
+        "type": "Numeric"
+      },
+      {
+        "value": "b",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"Test\"",
+        "type": "String"
+      },
+      {
+        "value": "c",
+        "type": "Identifier"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "broadcast",
+        "type": "Identifier"
+      },
+      {
+        "value": "true",
+        "type": "Boolean"
+      },
+      {
+        "value": "meta",
+        "type": "Identifier"
+      },
+      {
+        "value": "level",
+        "type": "Identifier"
+      },
+      {
+        "value": "1",
+        "type": "Numeric"
+      },
+      {
+        "value": "needAck",
+        "type": "Identifier"
+      },
+      {
+        "value": "false",
+        "type": "Boolean"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "serialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "cloneDeep",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "length",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "144",
+        "type": "Numeric"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "deserialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "not",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "toEqual",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      }
+    ],
+    "start_line": 18,
+    "end_line": 41
+  },
+  {
+    "URL": "https://github.com/moleculerjs/moleculer/blob/275eda52b1f1dd8f539e89ba840e29be606a5310/test/unit/serializers/notepack.spec.js",
+    "project_name": "moleculer",
+    "project_author": "moleculerjs",
+    "commit": "275eda52b1f1dd8f539e89ba840e29be606a5310",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "\"should serialize the event packet\"",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "new",
+        "type": "Keyword"
+      },
+      {
+        "value": "Date",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "ver",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"4\"",
+        "type": "String"
+      },
+      {
+        "value": "sender",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"node-100\"",
+        "type": "String"
+      },
+      {
+        "value": "id",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"8b3c7371-7f0a-4aa2-b734-70ede29e1bbb\"",
+        "type": "String"
+      },
+      {
+        "value": "event",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"user.created\"",
+        "type": "String"
+      },
+      {
+        "value": "data",
+        "type": "Identifier"
+      },
+      {
+        "value": "a",
+        "type": "Identifier"
+      },
+      {
+        "value": "5",
+        "type": "Numeric"
+      },
+      {
+        "value": "b",
+        "type": "Identifier"
+      },
+      {
+        "value": "\"Test\"",
+        "type": "String"
+      },
+      {
+        "value": "c",
+        "type": "Identifier"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "broadcast",
+        "type": "Identifier"
+      },
+      {
+        "value": "true",
+        "type": "Boolean"
+      },
+      {
+        "value": "meta",
+        "type": "Identifier"
+      },
+      {
+        "value": "level",
+        "type": "Identifier"
+      },
+      {
+        "value": "1",
+        "type": "Numeric"
+      },
+      {
+        "value": "needAck",
+        "type": "Identifier"
+      },
+      {
+        "value": "false",
+        "type": "Boolean"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "serialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "cloneDeep",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "length",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "144",
+        "type": "Numeric"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "serializer",
+        "type": "Identifier"
+      },
+      {
+        "value": "deserialize",
+        "type": "Identifier"
+      },
+      {
+        "value": "s",
+        "type": "Identifier"
+      },
+      {
+        "value": "P",
+        "type": "Identifier"
+      },
+      {
+        "value": "PACKET_EVENT",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "not",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "toEqual",
+        "type": "Identifier"
+      },
+      {
+        "value": "obj",
+        "type": "Identifier"
+      }
+    ],
+    "start_line": 18,
+    "end_line": 41
   }
 ]

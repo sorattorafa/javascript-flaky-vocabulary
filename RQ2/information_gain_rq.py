@@ -10,8 +10,8 @@ def weka_tokenizer(doc):
 if __name__ == '__main__':
 
     dirName = './datasets/dataframes'
-    flakyFileName = dirName + '/flakies/1.csv'
-    normalFileName = dirName + '/normal/1.csv'
+    flakyFileName = dirName + '/flakies/2.csv'
+    normalFileName = dirName + '/normal/2.csv'
 
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
