@@ -6,6 +6,9 @@
     "project_author": "vercel",
     "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
     "is_flaky": false,
+    "start_line": 57,
+    "end_line": 63,
+    
     "tokens": [
       {
         "value": "test",
@@ -103,6 +106,8 @@
     "project_author": "vercel",
     "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
     "is_flaky": false,
+    "start_line": 2232,
+    "end_line": 2280,
     "tokens": [
       {
         "value": "it",
@@ -652,6 +657,8 @@
     "project_author": "vercel",
     "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
     "is_flaky": false,
+    "start_line": 756,
+    "end_line": 766,
     "tokens": [
       {
         "value": "it",
@@ -757,6 +764,8 @@
     "project_author": "vercel",
     "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
     "is_flaky": false,
+    "start_line": 2091,
+    "end_line": 2148,
     "tokens": [
       {
         "value": "it",
