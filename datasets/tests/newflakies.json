@@ -1,5 +1,1357 @@
 [
 
+  {
+    "URL": "https://github.com/vercel/next.js/blob/99490de928fa6a5309e1f52523438b74a2b4dbd6/test/e2e/i18n-ignore-redirect-source-locale/redirects-with-basepath.test.ts",
+    "project_name": "next.js",
+    "project_author": "vercel",
+    "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "test",
+        "type": "Identifier"
+      },
+      {
+        "value": "each",
+        "type": "Identifier"
+      },
+      {
+        "value": "locales",
+        "type": "Identifier"
+      },
+      {
+        "value": "'get redirected to the new page, from: %s to: sv'",
+        "type": "String"
+      },
+      {
+        "value": "async",
+        "type": "Identifier"
+      },
+      {
+        "value": "locale",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "browser",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "webdriver",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "`${",
+        "type": "Template"
+      },
+      {
+        "value": "locale",
+        "type": "Identifier"
+      },
+      {
+        "value": "}/to-sv`",
+        "type": "Template"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "check",
+        "type": "Identifier"
+      },
+      {
+        "value": "browser",
+        "type": "Identifier"
+      },
+      {
+        "value": "elementById",
+        "type": "Identifier"
+      },
+      {
+        "value": "'current-locale'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "'sv'",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "URL": "https://github.com/vercel/next.js/blob/99490de928fa6a5309e1f52523438b74a2b4dbd6/test/e2e/prerender.test.ts",
+    "project_name": "next.js",
+    "project_author": "vercel",
+    "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "it",
+        "type": "Identifier"
+      },
+      {
+        "value": "'should manual revalidate for fallback: blocking with onlyGenerated if generated'",
+        "type": "String"
+      },
+      {
+        "value": "async",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "beforeRevalidate",
+        "type": "Identifier"
+      },
+      {
+        "value": "Date",
+        "type": "Identifier"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-if-generated-2'",
+        "type": "String"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "waitForCacheWrite",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-if-generated-2'",
+        "type": "String"
+      },
+      {
+        "value": "beforeRevalidate",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "'x-nextjs-cache'",
+        "type": "String"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/MISS/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "'p'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/Post:.*?test-if-generated-2/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-if-generated-2'",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html2",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$2",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html2",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "'x-nextjs-cache'",
+        "type": "String"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/(HIT|STALE)/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "$2",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/api/manual-revalidate'",
+        "type": "String"
+      },
+      {
+        "value": "pathname",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-if-generated-2'",
+        "type": "String"
+      },
+      {
+        "value": "onlyGenerated",
+        "type": "Identifier"
+      },
+      {
+        "value": "'1'",
+        "type": "String"
+      },
+      {
+        "value": "redirect",
+        "type": "Identifier"
+      },
+      {
+        "value": "'manual'",
+        "type": "String"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "status",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "200",
+        "type": "Numeric"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "revalidateData",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "json",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "revalidateData",
+        "type": "Identifier"
+      },
+      {
+        "value": "revalidated",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "true",
+        "type": "Boolean"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-if-generated-2'",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html4",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$4",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html4",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "$4",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "not",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "'x-nextjs-cache'",
+        "type": "String"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/(HIT|STALE)/",
+        "type": "RegularExpression"
+      }
+    ]
+  },
+  {
+    "URL": "https://github.com/vercel/next.js/blob/99490de928fa6a5309e1f52523438b74a2b4dbd6/test/e2e/prerender.test.ts",
+    "project_name": "next.js",
+    "project_author": "vercel",
+    "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "it",
+        "type": "Identifier"
+      },
+      {
+        "value": "'should show error about renaming unstable_revalidate'",
+        "type": "String"
+      },
+      {
+        "value": "async",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/api/manual-revalidate'",
+        "type": "String"
+      },
+      {
+        "value": "pathname",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blog/first'",
+        "type": "String"
+      },
+      {
+        "value": "deprecated",
+        "type": "Identifier"
+      },
+      {
+        "value": "'1'",
+        "type": "String"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "status",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "500",
+        "type": "Numeric"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "cliOutput",
+        "type": "Identifier"
+      },
+      {
+        "value": "toContain",
+        "type": "Identifier"
+      },
+      {
+        "value": "'\"unstable_revalidate\" has been renamed to \"revalidate\"'",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "URL": "https://github.com/vercel/next.js/blob/99490de928fa6a5309e1f52523438b74a2b4dbd6/test/e2e/prerender.test.ts",
+    "project_name": "next.js",
+    "project_author": "vercel",
+    "commit": "99490de928fa6a5309e1f52523438b74a2b4dbd6",
+    "is_flaky": false,
+    "tokens": [
+      {
+        "value": "it",
+        "type": "Identifier"
+      },
+      {
+        "value": "'should handle manual revalidate for fallback: blocking'",
+        "type": "String"
+      },
+      {
+        "value": "async",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "beforeRevalidate",
+        "type": "Identifier"
+      },
+      {
+        "value": "Date",
+        "type": "Identifier"
+      },
+      {
+        "value": "now",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-manual-1'",
+        "type": "String"
+      },
+      {
+        "value": "if",
+        "type": "Keyword"
+      },
+      {
+        "value": "isDeploy",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "waitForCacheWrite",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-manual-1'",
+        "type": "String"
+      },
+      {
+        "value": "beforeRevalidate",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "cacheHeader",
+        "type": "Identifier"
+      },
+      {
+        "value": "isDeploy",
+        "type": "Identifier"
+      },
+      {
+        "value": "'x-vercel-cache'",
+        "type": "String"
+      },
+      {
+        "value": "'x-nextjs-cache'",
+        "type": "String"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "cacheHeader",
+        "type": "Identifier"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/MISS/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "$",
+        "type": "Identifier"
+      },
+      {
+        "value": "'p'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/Post:.*?test-manual-1/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "if",
+        "type": "Keyword"
+      },
+      {
+        "value": "isDeploy",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-manual-1'",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html2",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$2",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html2",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res2",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "cacheHeader",
+        "type": "Identifier"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/(HIT|STALE)/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "$2",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/api/manual-revalidate'",
+        "type": "String"
+      },
+      {
+        "value": "pathname",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-manual-1'",
+        "type": "String"
+      },
+      {
+        "value": "redirect",
+        "type": "Identifier"
+      },
+      {
+        "value": "'manual'",
+        "type": "String"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "status",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "200",
+        "type": "Numeric"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "revalidateData",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res3",
+        "type": "Identifier"
+      },
+      {
+        "value": "json",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "revalidateData",
+        "type": "Identifier"
+      },
+      {
+        "value": "revalidated",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "true",
+        "type": "Boolean"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "check",
+        "type": "Identifier"
+      },
+      {
+        "value": "async",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "fetchViaHTTP",
+        "type": "Identifier"
+      },
+      {
+        "value": "next",
+        "type": "Identifier"
+      },
+      {
+        "value": "url",
+        "type": "Identifier"
+      },
+      {
+        "value": "'/blocking-fallback/test-manual-1'",
+        "type": "String"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "html4",
+        "type": "Identifier"
+      },
+      {
+        "value": "await",
+        "type": "Identifier"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "const",
+        "type": "Keyword"
+      },
+      {
+        "value": "$4",
+        "type": "Identifier"
+      },
+      {
+        "value": "cheerio",
+        "type": "Identifier"
+      },
+      {
+        "value": "load",
+        "type": "Identifier"
+      },
+      {
+        "value": "html4",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "$4",
+        "type": "Identifier"
+      },
+      {
+        "value": "'#time'",
+        "type": "String"
+      },
+      {
+        "value": "text",
+        "type": "Identifier"
+      },
+      {
+        "value": "not",
+        "type": "Identifier"
+      },
+      {
+        "value": "toBe",
+        "type": "Identifier"
+      },
+      {
+        "value": "initialTime",
+        "type": "Identifier"
+      },
+      {
+        "value": "expect",
+        "type": "Identifier"
+      },
+      {
+        "value": "res4",
+        "type": "Identifier"
+      },
+      {
+        "value": "headers",
+        "type": "Identifier"
+      },
+      {
+        "value": "get",
+        "type": "Identifier"
+      },
+      {
+        "value": "cacheHeader",
+        "type": "Identifier"
+      },
+      {
+        "value": "toMatch",
+        "type": "Identifier"
+      },
+      {
+        "value": "/(HIT|STALE)/",
+        "type": "RegularExpression"
+      },
+      {
+        "value": "return",
+        "type": "Keyword"
+      },
+      {
+        "value": "'success'",
+        "type": "String"
+      },
+      {
+        "value": "'success'",
+        "type": "String"
+      }
+    ]
+  },  
 
 {
     "URL": "https://github.com/vercel/next.js/blob/99490de928fa6a5309e1f52523438b74a2b4dbd6/test/e2e/basepath-trailing-slash.test.ts",
