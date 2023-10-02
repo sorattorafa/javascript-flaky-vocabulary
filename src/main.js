@@ -17,19 +17,17 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-
 class GithubTestCollector {
   constructor() {}
 
   get_tokens_from_repositories() {
-      return get_test_tokens();
+    return get_test_tokens();
   }
 
   get_flaky_tokens_from_commits() {
-    return get_flaky_tests_interface(); 
+    return get_flaky_tests_interface();
   }
 }
-
 
 const gtc = new GithubTestCollector();
 
@@ -45,7 +43,8 @@ rl.question(
 
   (opt) => {
     if (opt == 1) {
-      return gtc.get_tokens_from_repositories()
+      return gtc
+        .get_tokens_from_repositories()
         .then(() => rl.close())
         .catch(console.log);
     } else if (opt == 2) {
@@ -58,7 +57,7 @@ rl.question(
         .then(() =>
           fs.readFileSync("./configs/repositories.txt").toString().split("\n")
         )
-        .then((repos_array) => download_files(repos_array))
+        .then((repos_array) => repos_array.map((repo) => clone_repo(repo)))
         .catch(console.log)
         .finally(() => rl.close());
     } else if (opt == 4) {
@@ -84,7 +83,6 @@ rl.question(
         .finally(() => rl.close());
     } else if (opt == 6) {
       return get_flaky_tests_interface();
-
     } else if (opt == 7) {
       return parse_flaky_tests_interface();
     }
@@ -93,23 +91,29 @@ rl.question(
 
 async function parse_flaky_tests_interface() {
   return Promise.resolve()
-    .then(() => getStream.array(
-      fs
-        .createReadStream(`${__dirname}/../datasets/identified-flaky.csv`)
-        .pipe(csv.parse({ headers: true }))
-    )).then((result) => {
+    .then(() =>
+      getStream.array(
+        fs
+          .createReadStream(`${__dirname}/../datasets/identified-flaky.csv`)
+          .pipe(csv.parse({ headers: true }))
+      )
+    )
+    .then((result) => {
       var flaky_array = [];
-      result.map(e => {
+      result.map((e) => {
         var flakies = flaky_parser(e);
-        flakies.map(e => {
+        flakies.map((e) => {
           flaky_array.push(e);
         });
       });
       return flaky_array;
     })
-    .then(result => {
+    .then((result) => {
       const data = JSON.stringify(result, null, 2);
-      return fs.writeFileSync(`${__dirname}/../datasets/flaky_json/tests/flaky-parsed.json`, data);
+      return fs.writeFileSync(
+        `${__dirname}/../datasets/flaky_json/tests/flaky-parsed.json`,
+        data
+      );
     })
     .then(() => rl.close())
     .catch(console.log);
@@ -122,10 +126,11 @@ async function get_flaky_tests_interface() {
         .createReadStream(`${__dirname}/../datasets/identified-flaky.csv`)
         .pipe(csv.parse({ headers: true }))
     )
-    .then((result) => Promise.all(result.map((row) => get_flaky_from_test_affected(row))))
+    .then((result) =>
+      Promise.all(result.map((row) => get_flaky_from_test_affected(row)))
+    )
     .then(console.log)
     .then(() => rl.close());
-
 }
 async function get_flaky_from_test_affected(row) {
   const { "Tests/Code Affected (to Reproduce)": test_affected, URL } = row;
@@ -147,7 +152,7 @@ async function get_flaky_from_test_affected(row) {
     row["is_test_code"].toString().includes("true")
   ) {
     if (test_affected.includes(";")) {
-      throw new Error('nao é teste');
+      throw new Error("nao é teste");
     }
     return get_flaky_test(project_name, row);
   }
