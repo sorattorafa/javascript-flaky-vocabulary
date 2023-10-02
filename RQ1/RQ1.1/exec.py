@@ -59,10 +59,10 @@ def initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileNa
     new_x_test = new_x_test.fillna(0)
 
     # get training instances
-    X_train, _, y_train, _ = train_test_split(x, y, test_size=0.20, random_state=1)
+    #X_train, _, y_train, _ = train_test_split(x, y, test_size=0.20, random_state=1)
 
     # return training and test instances
-    return [X_train, new_x_test, y_train, new_y_test]
+    return [x, new_x_test, y, new_y_test]
 
 def get_x_and_y_from_dfs(df_flaky, df_normal):
     frames = [df_flaky, df_normal]
@@ -87,7 +87,7 @@ def add_missing_columns(df, df_w_columns):
 
 def initClassifiers():
     classifiers = {
-        'lda': LinearDiscriminantAnalysis(),
+        #'lda': LinearDiscriminantAnalysis(),
         'randomForest': RandomForestClassifier(random_state=1), 
         'decisionTree': DecisionTreeClassifier(min_samples_leaf=1),
         'naiveBayes': GaussianNB(),
