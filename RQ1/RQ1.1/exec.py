@@ -26,6 +26,31 @@ import numpy as np
 #from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
+def initDatasetW2csv(flakyFileName, normalFileName):
+    
+    df_flaky = pd.read_csv(flakyFileName)
+    df_normal = pd.read_csv(normalFileName)
+    
+
+    df_flaky['is_flaky'] = True
+    df_normal['is_flaky'] = False
+    
+    frames = [df_flaky, df_normal]
+    
+    result = pd.concat(frames)
+
+    result = result.fillna(0)
+    
+    y = result['is_flaky']
+
+    result.drop('is_flaky', axis=1, inplace=True)
+
+    x = result
+    
+    X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
+    
+    return [X_train, x_test, y_train, y_test]
+
 def initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName):
     # read 4 csv's
     df_tcc_flaky = pd.read_csv(flakyFileName)
@@ -160,7 +185,7 @@ def plot_learning_curve(estimator, name, title, X, y, axes=None, ylim=None, cv=N
     axes[2].set_ylabel("Score")
     axes[2].set_title("Performance of the model")
 
-    fig.savefig('plot/' + name + '.png')
+    fig.savefig('plot_first_experiment/' + name + '.png')
 
 def plot_comparison(comparison_values):
     
@@ -184,7 +209,7 @@ def plot_comparison(comparison_values):
 
     comp.tight_layout()
 
-    comp.savefig('plot/compare.png')
+    comp.savefig('plot_first_experiment/compare.png')
 
 
 def saveIncorrectClassifications(X_test, predicted, label, classifier):
@@ -281,7 +306,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
             disp.plot()
             #disp.ax_.set_title(key)
             
-            plt.savefig('plot/CM/cm_' + key + '.png')
+            plt.savefig('plot_first_experiment/CM/cm_' + key + '.png')
 
         
         #pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
@@ -290,7 +315,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
     if (plot):
         plot_comparison(comparison_values)
-    results.to_csv('results/results.csv',index=False)
+    results.to_csv('results_first_experiment/results.csv',index=False)
     return results
 
 
@@ -306,10 +331,12 @@ if __name__ == "__main__":
     flakyFileName = dirName + '/flakies/1.csv'
     unknownFileName = dirName + '/normal/1.csv'
     
-    nonFlakyFileName = dirName + '/normal/2.csv'
-    newFlakyFileName = dirName + '/flakies/2.csv'
+    #nonFlakyFileName = dirName + '/normal/2.csv'
+    #newFlakyFileName = dirName + '/flakies/2.csv'
 
-    X_train, x_test, y_train, y_test = initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName)
+    #X_train, x_test, y_train, y_test = initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName)
+    X_train, x_test, y_train, y_test = initDatasetW2csv(flakyFileName, unknownFileName)
+    
     print("Data - OK")
 
     classifiers = initClassifiers()
