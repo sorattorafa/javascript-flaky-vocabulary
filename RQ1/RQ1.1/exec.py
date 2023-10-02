@@ -10,11 +10,11 @@ from sklearn.linear_model import Perceptron
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import f1_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import classification_report
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import matthews_corrcoef
-from sklearn.metrics import plot_confusion_matrix
+#from sklearn.metrics import plot_confusion_matrix
 from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.preprocessing import Binarizer
@@ -26,7 +26,7 @@ import numpy as np
 #from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
-def initDataset(flakyFileName, normalFileName):
+def initDatasetW2csv(flakyFileName, normalFileName):
     
     df_flaky = pd.read_csv(flakyFileName)
     df_normal = pd.read_csv(normalFileName)
@@ -49,13 +49,70 @@ def initDataset(flakyFileName, normalFileName):
     
     X_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=1)
     
-    # para o id não atrapalhar o modelo de classificação
-    # X_train.drop('id', axis=1, inplace=True)
-    
     return [X_train, x_test, y_train, y_test]
+
+def initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName):
+    # read 4 csv's
+    df_tcc_flaky = pd.read_csv(flakyFileName)
+    df_tcc_unknown = pd.read_csv(unknownFileName)
+    
+    df_new_normal = pd.read_csv(nonFlakyFileName)
+    df_new_flakies = pd.read_csv(newFlakyFileName)    
+
+    # add is_flaky column label
+    df_tcc_flaky['is_flaky'] = True
+    df_tcc_unknown['is_flaky'] = False
+    
+    df_new_normal['is_flaky'] = False
+    df_new_flakies['is_flaky'] = True
+    
+    # get x and y to training model
+    x, y = get_x_and_y_from_dfs(df_tcc_flaky, df_tcc_unknown)
+
+    # get x and y to test model 
+    new_x_test, new_y_test = get_x_and_y_from_dfs(df_new_flakies, df_new_normal)
+        
+    # add missing columns to original df and new df
+    x = add_missing_columns(x, new_x_test)
+    new_x_test = add_missing_columns(new_x_test, x)
+
+    # set df columns the same order
+    x, new_x_test = order_df_columns(x, new_x_test)
+    
+    # remove not a numbers
+    x = x.fillna(0)
+    new_x_test = new_x_test.fillna(0)
+
+    # get training instances
+    #X_train, _, y_train, _ = train_test_split(x, y, test_size=0.20, random_state=1)
+
+    # return training and test instances
+    return [x, new_x_test, y, new_y_test]
+
+def get_x_and_y_from_dfs(df_flaky, df_normal):
+    frames = [df_flaky, df_normal]
+    result = pd.concat(frames)
+    y = result['is_flaky']
+    result.drop('is_flaky', axis=1, inplace=True)
+    x = result
+    return [x, y]
+
+def order_df_columns(x, y):
+    desired_order = x.columns
+    y = y.reindex(columns=desired_order)
+    x = x.reindex(columns=desired_order)
+    
+    return [x, y]
+    
+def add_missing_columns(df, df_w_columns):
+    missing_columns = [column_name for column_name in df_w_columns.columns if column_name not in df.columns]
+    missing_columns_df = pd.DataFrame(0, index=df.index, columns=missing_columns)
+    df = pd.concat([df, missing_columns_df], axis=1)
+    return df
 
 def initClassifiers():
     classifiers = {
+        #'lda': LinearDiscriminantAnalysis(),
         'randomForest': RandomForestClassifier(random_state=1), 
         'decisionTree': DecisionTreeClassifier(min_samples_leaf=1),
         'naiveBayes': GaussianNB(),
@@ -63,12 +120,10 @@ def initClassifiers():
         'knn': KNeighborsClassifier(n_neighbors=1, metric='euclidean'),
         'logisticRegression': LogisticRegression(max_iter=1000),
         'perceptron': CalibratedClassifierCV(Perceptron()),
-        'lda': LinearDiscriminantAnalysis(),
         #'xgb': XGBClassifier(),
     }
 
     return classifiers
-
 
 def round_float(value):
     return float("{:.3f}".format(value))
@@ -130,7 +185,7 @@ def plot_learning_curve(estimator, name, title, X, y, axes=None, ylim=None, cv=N
     axes[2].set_ylabel("Score")
     axes[2].set_title("Performance of the model")
 
-    fig.savefig('plot/' + name + '.png')
+    fig.savefig('plot_first_experiment/' + name + '.png')
 
 def plot_comparison(comparison_values):
     
@@ -154,7 +209,7 @@ def plot_comparison(comparison_values):
 
     comp.tight_layout()
 
-    comp.savefig('plot/compare.png')
+    comp.savefig('plot_first_experiment/compare.png')
 
 
 def saveIncorrectClassifications(X_test, predicted, label, classifier):
@@ -213,6 +268,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
             x_test_exec = x_test_norm
 
         classifier.fit(x_train_exec, y_train)
+        
         classifier.score(x_test_exec, y_test)
 
         predict = classifier.predict(x_test_exec)
@@ -223,18 +279,20 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
         
         saveIncorrectClassifications(x_test, predict, y_test, key)
 
+        cm = confusion_matrix(y_test, predict)
+        
         result = {
             'classifier': key,
             'f1Score': f1_score(y_test, predict, average='weighted'), #labels=labels,
             'accuracy': classifier.score(x_test_exec, y_test),
-            'confucionMatrix': confusion_matrix(y_test, predict),
+            'confucionMatrix': cm,
             'execution': round_float(get_time(start_time)),
             'classificationReport': classification_report(y_test, predict, output_dict=True), #, target_names=labels
             'AUC': roc_auc_score(y_test, y_probs),
             'MCC': matthews_corrcoef(y_test, predict), 
         }
 
-        results = results.append(result,  ignore_index=True)
+        results = results._append(result,  ignore_index=True)
 
         if (plot):
             plot_learning_curve(classifier, key, key, x_train_exec, y_train, ylim=(0.7, 1.01), n_jobs=4) #cv=cv, 
@@ -244,12 +302,11 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
                 'y_probs': y_probs
             }
 
-            disp = plot_confusion_matrix(classifier, x_test_exec, y_test,
-                                 display_labels=['nonflaky', 'flaky'],
-                                 cmap=plt.cm.Blues)
-            disp.ax_.set_title(key)
+            disp = ConfusionMatrixDisplay(cm, display_labels=['nonflaky', 'flaky'])
+            disp.plot()
+            #disp.ax_.set_title(key)
             
-            plt.savefig('plot/CM/cm_' + key + '.png')
+            plt.savefig('plot_first_experiment/CM/cm_' + key + '.png')
 
         
         #pickle.dump(classifier, open("classifiers/" + key + ".sav", 'wb'))
@@ -258,7 +315,7 @@ def execClassifiers(X_train, x_test, y_train, y_test, classifiers, normalize=[],
 
     if (plot):
         plot_comparison(comparison_values)
-    results.to_csv('results/results.csv',index=False)
+    results.to_csv('results_first_experiment/results.csv',index=False)
     return results
 
 
@@ -270,10 +327,16 @@ if __name__ == "__main__":
     # verificar para todos projetos
     start_time = 0
     dirName = './datasets/dataframes'
+    
     flakyFileName = dirName + '/flakies/1.csv'
-    normalFileName = dirName + '/normal/1.csv'
+    unknownFileName = dirName + '/normal/1.csv'
+    
+    #nonFlakyFileName = dirName + '/normal/2.csv'
+    #newFlakyFileName = dirName + '/flakies/2.csv'
 
-    X_train, x_test, y_train, y_test = initDataset(flakyFileName, normalFileName)
+    #X_train, x_test, y_train, y_test = initDataset(flakyFileName, nonFlakyFileName, newFlakyFileName, unknownFileName)
+    X_train, x_test, y_train, y_test = initDatasetW2csv(flakyFileName, unknownFileName)
+    
     print("Data - OK")
 
     classifiers = initClassifiers()

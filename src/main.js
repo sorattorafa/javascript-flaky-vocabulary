@@ -147,18 +147,13 @@ async function get_flaky_from_test_affected(row) {
     row["is_test_code"].toString().includes("true")
   ) {
     if (test_affected.includes(";")) {
-      console.log('não é teste');
       throw new Error('nao é teste');
     }
     return get_flaky_test(project_name, row);
   }
-  console.log('não é teste');
 }
 
 rl.on("close", function () {
   console.log("\nBYE BYE !!!");
   process.exit(0);
 });
-
-// verificar denovo:
-// test(angular1): Temporarily comment out flaky test,https://github.com/OnsenUI/OnsenUI/commit/e5f3e1a0e11a2f9aa97b0fca65d1a5544b6276dc, Flaky behavior with DOM selectors,DOM Selector Issue,https://github.com/OnsenUI/OnsenUI/blob/e5f3e1a0e11a2f9aa97b0fca65d1a5544b6276dc/bindings/angular1/test/e2e/dialog/scenarios.js, CircleCI,Unspecified,Commented out,Remove Test, ,false , 22, 43,

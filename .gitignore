@@ -7,6 +7,8 @@ downloads_flaky
 todo.txt
 .env
 datasets/dataframes/**/*.csv
-datasets/tests/normal-tests.json
+datasets/tests/normal-tests-tcc.json
+datasets/tests/flaky-parsed-tcc.json
 *.sav
 classifiers/
+IC

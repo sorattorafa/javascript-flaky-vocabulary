@@ -83,7 +83,7 @@ def init_dataset(file_loc, sampling=False):
                     instance_tokens[instance_token['value']] = instance_tokens[instance_token['value']] + 1
             pd_row = pd.DataFrame.from_dict([instance_tokens]).astype(np.int16)
             pd_row['id'] = row['URL'] + '_' + str(row['start_line'])
-            dataset_df = dataset_df.append(pd_row)
+            dataset_df = dataset_df._append(pd_row)
             i += 1
             if (i % 100 == 0):
                 gc.collect()
@@ -209,15 +209,27 @@ def clustered_dataset(file_loc):
         return df
 
 if __name__ == "__main__":
+  
+    # flaky tests tcc
+    #flaky_tests_json = './datasets/tests/flaky-parsed-tcc.json'
+    ##df = init_dataset(flaky_tests_json)
+    #df.to_csv('./datasets/dataframes/flakies/1.csv', index=False)
+  
+    # Normal datasets tcc
+    #normal_tests_json = './datasets/tests/normal-tests-tcc.json'
+    #normal_df = init_dataset(normal_tests_json, sampling=True)
+    #normal_df.to_csv('./datasets/dataframes/normal/1.csv', index=False)
+   
     # Flaky datasets
-    flaky_tests_json = './datasets/tests/flaky-parsed.json'
+    flaky_tests_json = './datasets/tests/next.json'
     df = init_dataset(flaky_tests_json)
-    df.to_csv('./datasets/dataframes/flakies/1.csv', index=False)
+    df.to_csv('./datasets/dataframes/projects/moleculer.csv', index=False)
     
     # Normal datasets
-    normal_tests_json = './datasets/tests/normal-tests.json'
-    normal_df = init_dataset(normal_tests_json, True)
-    normal_df.to_csv('./datasets/dataframes/normal/1.csv', index=False)
+    #normal_tests_json = './datasets/tests/normal-tests.json'
+    #normal_df = init_dataset(normal_tests_json)
+    #normal_df.to_csv('./datasets/dataframes/normal/2.csv', index=False)
+   
    
 
    
