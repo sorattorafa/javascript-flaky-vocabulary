@@ -37,22 +37,52 @@ the vocabulary approach.*
 
 ## Flaky Tests Tokenization Features
 
-- [Clone and Checkout repositories](#tokenization)
+- [Get Test Code from Repositories](#Tokenizer)
 - [Select and Parse all CUT (Code Under Test)](#dependencies)
 
+# Tokenizer
 
+## Setup Repositories
 
+```
+cd configs
+```
 
-# Tokenization
+- Add repository author and name with format (author/name) on line into repositories.txt
+  - Example: 
+    ``` 
+    angular/angular
+    angular/components
+    ```
+
+- Add repositories tests paths and names on `availables-tests-folders.txt` and `availables-test-names.txt` 
+  - Example:
+    - `availables-tests-folders.txt`
+    ``` 
+    test
+    spec
+    __tests__
+    tests
+    integration
+    e2e-tests
+    integration-tests
+    js/tests
+    ```
+    
+    - `availables-test-names.txt`
+    ``` 
+    test
+    it
+    ```
+
+## Run tokenizer
 
 ```
 cd src/
-
-npm install
-
-node 
-
+yarn
+yarn run:tokenizer
 ```
+
 # Authors
 
 <table>

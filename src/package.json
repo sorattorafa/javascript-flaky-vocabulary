@@ -1,8 +1,8 @@
 {
-  "name": "esprimatokenizer",
+  "name": "javascriptflakytokenizer",
   "version": "1.0.0",
-  "description": "simple tokenizer using esprima",
-  "main": "esprima.js",
+  "description": "simple tokenizer of flaky tests",
+  "main": "main.js",
   "dependencies": {
     "dotenv": "^16.0.0",
     "fast-csv": "^4.3.6",
@@ -17,7 +17,7 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run:tokenizer": "node main.js"
   },
   "author": "Rafael Rampim Soratto",
   "license": "ISC"

@@ -35,25 +35,17 @@ const gtc = new GithubTestCollector();
 
 rl.question(
   `Welcome to code-tokenizer, please select option: \n 
-  1) Code tokenizer \n
-  2) Classify Ui flaky tests \n
-  3) Download repositories \n
-  4) Make checkout into repositorie \n ,
-  5) Parse JavaScript Code \n ,
-  6) GET FLAKY TESTS \n ,
-  7) PARSE FLAKY TESTS \n `,
+  1) Get Token From Repositories \n
+  2) Download repositories \n
+  3) Make checkout into repository \n `,
 
   (opt) => {
     if (opt == 1) {
       return gtc.get_tokens_from_repositories()
         .then(() => rl.close())
         .catch(console.log);
-    } else if (opt == 2) {
-      return classify_flaky_csv()
-        .then(() => console.log("finish"))
-        .catch(console.log)
-        .finally(() => rl.close());
-    } else if (opt == 3) {
+    } 
+    else if (opt == 2) {
       return Promise.resolve()
         .then(() =>
           fs.readFileSync("./configs/repositories.txt").toString().split("\n")
@@ -61,7 +53,7 @@ rl.question(
         .then((repos_array) => download_files(repos_array))
         .catch(console.log)
         .finally(() => rl.close());
-    } else if (opt == 4) {
+    } else if (opt == 3) {
       rl.question(`enter with repo and checkout id with , separator`, (opt) => {
         const [repo, checkoutId] = opt.split(",");
 
@@ -70,7 +62,15 @@ rl.question(
           .catch(console.log)
           .finally(() => rl.close());
       });
-    } else if (opt == 5) {
+    }     
+    /*
+    else if (opt == 2) {
+      return classify_flaky_csv()
+        .then(() => console.log("finish"))
+        .catch(console.log)
+        .finally(() => rl.close());
+    }
+    else if (opt == 5) {
       return Promise.resolve()
         .then(() => fs.readFileSync("./configs/jsexample.js", "utf8"))
         .then((contents) => {
@@ -82,12 +82,14 @@ rl.question(
         })
         .catch(console.log)
         .finally(() => rl.close());
-    } else if (opt == 6) {
+    }
+    else if (opt == 5) {
       return get_flaky_tests_interface();
 
-    } else if (opt == 7) {
+    } else if (opt == 6) {
       return parse_flaky_tests_interface();
     }
+    */
   }
 );
 
