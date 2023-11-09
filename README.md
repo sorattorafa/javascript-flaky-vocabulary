@@ -1,79 +1,58 @@
 <h1 align="center">Vocabulary of flaky tests in Javascript</h1>
-<p href="#descricao" align="center">Get test tokens by Github repository url and training ML models to predict flakiness with Javascript test code.</p>
+<p href="#descricao" align="center">XXII Brazilian Symposium on Software Quality (SBQS ’23), November 7–10, 2023, Brasília, Brazil</p>
 
-<div align="center">
-  <img alt="Java" src="https://img.shields.io/badge/javascript-%23ED8B00.svg?style=for-the-badge&logo=javascript&logoColor=white"/>
-</div>
-
-
-# Vocabulary of flaky tests in Javascript
-
-This repository contains supplementary material of the Thesis "Vocabulary of flaky tests in Javascript" as a parcial requisite to fullfill computer scientist course of Universidade Tecnológica Federal do Paraná, Campo Mourão. 
+# Vocabulary of Flaky Tests in Javascript
 
 **Abstract**: 
 
-*Context: Regression testing is a software verification and validation activity in modern software engineering. In this activity, tests can fail without any implementation change, characterizing a flaky test. Flaky tests may delay the release of the software and reduce testing confidence. One way to identify flaky tests is by re-running the tests, but this has a high computational cost. An alternative to re-execution is the static analysis of the code of the test cases, identifying patterns related to flaky tests. Objective: The objective of this work was to identify flaky tests in Javascript applications by analysing the source code of the test cases, without executing them. Method: A dataset was built with flaky test cases extracted from open source software hosted on Github that are implemented in Javascript. Then, a classification model and an flakiness vocabulary were created, considering the source code of flaky tests in the Javascript language. Results: We provide a dataset with the source code of flaky and non-flaky Javascript test cases, the output of machine learning models to predict flaky tests from source code, an flakiness vocabulary for test cases Javascript testing and artifacts to extract textual information from test cases on Github. Conclusions: This work presents relevant results for identifying flaky tests in projects that use Javascript. Flakiness vocabulary can speed identification of the root cause of intermittent failure. For example, in asynchronous waiting root cause we found that the terms ‘then’, ‘await’, ‘return’ and ‘done’ can be directly related to instability. Further studies are required to consolidate the reliable classification of tests regarding flakiness using the vocabulary approach.*
+*Context: Regression testing is a software verification and valida-
+tion activity in modern software engineering. In this activity, tests
+can fail without any implementation change, characterizing a flaky
+test. Flaky tests may delay the release of the software and reduce
+testing confidence. One way to identify flaky tests is by re-running
+the tests, but this has a high computational cost. An alternative
+to re-execution is the static analysis of the code of the test cases,
+identifying patterns related to flaky tests. Objective: The objective
+of this work was to identify flaky tests in Javascript applications
+by analyzing the source code of the test cases, without executing
+them. Method: A dataset was built with flaky test cases extracted
+from open source software hosted on GitHub and implemented
+in Javascript. Then, a classification model and a flakiness vocab-
+ulary were created, considering the source code of flaky tests in
+the Javascript language. Results: We observed good results during
+the execution of most classifiers using the training and validation
+sets, with the best result being the logistic regression algorithm.
+However, when classifying the test set, the performance was not
+good, with the best results being the linear discriminant analysis.
+We obtained a vocabulary related to instability with words associ-
+ated with asynchronous behavior (then, await, return) and related
+to UI (layout, gd, plot, click). Conclusions: This work presents
+relevant results toward a more efficient identification of flaky tests
+in projects that use Javascript. Further studies are required to con-
+solidate a reliable classification of tests regarding flakiness using
+the vocabulary approach.*
+
+
+# Table of contents
+
+## Flaky Tests Tokenization Features
+
+- [Clone and Checkout repositories](#tokenization)
+- [Select and Parse all CUT (Code Under Test)](#dependencies)
 
 
 
 
-## Get data from Github section
+# Tokenization
 
-<!--ts-->
+```
+cd src/
 
-- [Dependencies](#dependencies)
-- [Executando o projeto](#run)
-- [Exemplos de Uso](#use-cases)
-- [Autores](#authors)
-<!--te-->
-
-# Dependencies
-
-- Install dependencies
-
-```shell
-cd src
 npm install
+
+node 
+
 ```
-
-# Run
-
-## 🎲 Generate csv with tokens by test
-
-### Setup repositories
-
-- All Configurations of code-tokenizer are saved into configs
-
-### Run
-
-```bash
-# into src path execute
-$ node src/test-code-tokenizer.js
-```
-
-# Use cases
-
-- Can be used to extract test tokens by nodejs GitHub repositories.
-- Can be to parse flaky tests from csv
-
-#### Dependencies
-
-
-### Repositórios analisados
-
-Fora extraídos casos de testes destes repositórios para criar o dataset de tokens de testes.
-uber/baseweb
-angular/angular
-angular/components
-ploty/ploty_js
-mobxjs/mobx
-influxdata/influxdb
-twbs/bootstrap
-
-### RUN GITHUB COLLECT
-
-- `node --max-old-space-size=18192 .\src\main.js`
-
 # Authors
 
 <table>
