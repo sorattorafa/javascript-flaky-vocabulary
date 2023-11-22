@@ -16,6 +16,24 @@ Then, a classification model and a flakiness vocabulary were created, considerin
 the vocabulary approach.*
 
 
+
+# Bibtex
+
+```
+@InProceedings{Rafael.Soratto-GraciottoSilva:2023,
+  title            = {Vocabulary of Flaky Tests in Javascript},
+  author           = {Rafael Rampim Soratto and Marco Aurélio Graciotto Silva},
+  doi              = {10.1145/3629479.3629487},
+  booktitle        = {XXII Simpósio Brasileiro de Qualidade de Software},
+  month            = nov,
+  year             = {2023},
+  location         = {Brasília, DF, Brazil},
+  pages            = {1--10},
+  publisher        = {ACM},
+  address          = {New York, NY, USA}
+}
+
+```
 # Table of contents
 
 ## Flaky Tests Tokenization Features
@@ -170,3 +188,4 @@ python3 RQ2/information_gain.py
     <td align="center"><a href="https://www.linkedin.com/in/rafael-rampim-soratto-a42793190/"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/38047989?v=4" width="100px;" alt=""/></a><br /><a href="https://www.linkedin.com/in/rafael-rampim-soratto-a42793190/" title="Rafael Soratto"><img href="https://www.linkedin.com/in/rafael-rampim-soratto-a42793190/" src="https://img.shields.io/badge/-RafaelSoratto-0077B5?style=flat&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rafael-rampim-soratto-a42793190/"></a></td>
   </tr>
 </table>
+
